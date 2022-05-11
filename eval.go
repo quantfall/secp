@@ -1,4 +1,4 @@
-package pepe
+package secp
 
 import "fmt"
 
@@ -18,7 +18,7 @@ func New() *Password {
 	return p
 }
 
-func inList(l []string, e interface{}) bool {
+func inList(l []string, e string) bool {
 	for _, value := range l {
 		if e == value {
 			return true
@@ -34,27 +34,21 @@ func (p Password) IsCompliant(s string) (bool, error) {
 	var scsum int
 
 	for _, value := range s {
-		if inList(p.AllowedLowerLetters, value) {
+		if inList(p.AllowedLowerLetters, string(value)) {
 			llsum++
-		} else if inList(p.AllowedCapitalLetters, value) {
+		} else if inList(p.AllowedCapitalLetters, string(value)) {
 			clsum++
-		} else if inList(p.AllowedNumbers, value) {
+		} else if inList(p.AllowedNumbers, string(value)) {
 			nsum++
-		} else if inList(p.AllowedSpecialCharacters, value) {
+		} else if inList(p.AllowedSpecialCharacters, string(value)) {
 			scsum++
 		} else {
 			return false, fmt.Errorf("Password contains an invalid character: %c", value)
 		}
-
-		fmt.Sprintln(llsum, clsum, nsum, scsum)
 	}
 
 	if llsum >= p.MinLowerLetters && clsum >= p.MinCapitalLetters && nsum >= p.MinNumbers && scsum >= p.MinSpecialCharacters {
-		fmt.Println(true)
-
 		return true, nil
 	}
-	fmt.Println(false)
-
 	return false, nil
 }
