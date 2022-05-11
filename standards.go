@@ -29,5 +29,5 @@ func CommonKeyboardSymbols() []string {
 }
 
 func SymbolsNonReservedByYAML() []string {
-	return []string{"€", "/", "(", ")", "=", "+", "´", "°", "§", "^", "¨", ",", ".", "_", ";", "<", "$"}
+	return []string{"€", "/", "=", "+", "§", ",", ".", "_", ";", "<", "$"}
 }
