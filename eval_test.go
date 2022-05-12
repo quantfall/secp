@@ -17,7 +17,7 @@ func TestIsCompliant(t *testing.T) {
 	p.MinNumbers = 4
 	p.MinSpecialCharacters = 2
 
-	testP1 := "abcdfAE1234,."
+	testP1 := "abcdfAE1234,.#"
 	testP2 := "abcdfAE1234,."
 	testP3 := "123455.,"
 	testP4 := "carAbamOs.,"
