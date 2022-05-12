@@ -27,7 +27,7 @@ func inList(l []string, e string) bool {
 	return false
 }
 
-func (p Password) IsCompliant(s string) (bool, error) {
+func (p Password) IsCompliant(s string) error {
 	var llsum int
 	var clsum int
 	var nsum int
@@ -43,12 +43,25 @@ func (p Password) IsCompliant(s string) (bool, error) {
 		} else if inList(p.AllowedSpecialCharacters, string(value)) {
 			scsum++
 		} else {
-			return false, fmt.Errorf("Password contains an invalid character: %c", value)
+			return fmt.Errorf("the password contains an invalid character: %c", value)
 		}
 	}
 
-	if llsum >= p.MinLowerLetters && clsum >= p.MinCapitalLetters && nsum >= p.MinNumbers && scsum >= p.MinSpecialCharacters {
-		return true, nil
+	if llsum < p.MinLowerLetters {
+		return fmt.Errorf("the password does not contains at least %d lower case letters ", p.MinLowerLetters)
 	}
-	return false, nil
+
+	if clsum < p.MinCapitalLetters {
+		return fmt.Errorf("the password does not contains at least %d capital case letters ", p.MinCapitalLetters)
+	}
+
+	if nsum < p.MinNumbers {
+		return fmt.Errorf("the password does not contains at least %d numbers", p.MinNumbers)
+	}
+
+	if scsum < p.MinSpecialCharacters {
+		return fmt.Errorf("the password does not contains at least %d special characters", p.MinSpecialCharacters)
+	}
+	
+	return nil
 }
